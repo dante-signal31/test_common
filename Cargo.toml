@@ -1,11 +1,11 @@
 [package]
 name = "test_common"
-version = "1.0.0"
+version = "1.0.1"
 authors = ["dante-signal31 <dante.signal31@gmail.com>"]
 edition = "2018"
 description = "Just an utility library with functionality I usually use in my unit tests and integration tests."
 license-file = "LICENSE"
-homepage = "https://github.com/dante-signal31/steganer"
+homepage = "https://github.com/dante-signal31/test_common"
 
 [dependencies]
 ring = "0.14.6"

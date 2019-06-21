@@ -1,4 +1,5 @@
 /// Module to perform cryptographic file related operations.
+
 use ring::digest::{Context, Digest, SHA256};
 use std::fs::File;
 use std::io::{BufReader, Read, Error};
@@ -9,6 +10,12 @@ use std::str;
 /// This way we can check two files have same content.
 ///
 /// Original code got from [Rust Cookbok](https://rust-lang-nursery.github.io/rust-cookbook/cryptography/hashing.html)
+///
+/// # Parameters:
+/// * file_path: Absolute path name as a &str.
+///
+/// # Returns:
+/// File has as a Digest or a Error if any ocurred.
 pub fn hash_file(file_path: &str) -> Result<Digest, Error> {
     let mut reader = BufReader::new(File::open(file_path)?);
     let mut context = Context::new(&SHA256);

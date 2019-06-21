@@ -1,14 +1,16 @@
 /// Module to perform filesystem typical operations, like copy or remove files.
+
 use std::fs::{remove_file, copy};
 use std::io;
 use std::path::Path;
 
 /// Delete an specific file.
 ///
-/// Returns Ok(()) if sucessful and std::io::Error if not.
-///
 /// # Parameters:
 /// * file_path: &str with the absolute path to file.
+///
+/// # Returns:
+/// Returns Ok(()) if sucessful and std::io::Error if not.
 pub fn delete_file(file_path: &str)-> Result<(), io::Error>{
     remove_file(file_path)?;
     Ok(())
@@ -16,11 +18,12 @@ pub fn delete_file(file_path: &str)-> Result<(), io::Error>{
 
 /// Delete all files set in given list.
 ///
-/// Returns an io::Error if any file does not exists unless ignore_missing was true.
-///
 /// # Parameters:
 /// * files: Vector with filepath list to remove.
 /// * ignore_missing: If true does not return an error if any of files actually does not exists.
+///
+/// # Returns:
+/// Returns an io::Error if any file does not exists unless ignore_missing was true.
 pub fn delete_files(files: Vec<&str>, ignore_missing: bool)-> Result<(), io::Error>{
     for file in files{
         if ignore_missing {
@@ -34,18 +37,26 @@ pub fn delete_files(files: Vec<&str>, ignore_missing: bool)-> Result<(), io::Err
 
 /// Copy an specific file.
 ///
-/// Returns an Ok(u64) with copied file size if operation was successful. Otherwise
-/// it returns an io::Error.
-///
 /// # Parameters:
 /// * source_file_path: &str with absolute pathname to original file.
 /// * destination_file_path: &str with absolute pathname to copied file.
+///
+/// # Returns:
+/// Returns an Ok(u64) with copied file size if operation was successful. Otherwise
+/// it returns an io::Error.
 pub fn copy_file(source_file_path: &str, destination_file_path: &str)-> Result<u64, io::Error>{
     Ok(copy(source_file_path, destination_file_path)?)
 }
 
 /// Copy all files in an given list to a given destination folder. Original file names
 /// are kept untouched.
+///
+/// # Parameters:
+/// * files: Vector with absolute file path names as &str.
+/// * destination_folder_path: Absolute path name to folder where to copy files into.
+///
+/// # Returns:
+/// Returns an io::Error if destination_folder does not exists or any to be copied file does not..
 pub fn copy_files(files: Vec<&str>, destination_folder_path: &str)-> Result<(), io::Error> {
     for file in files{
         let path = Path::new(&file);
