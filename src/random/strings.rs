@@ -1,7 +1,14 @@
 use rand::prelude::*;
 use rand::distributions::Alphanumeric;
 
-fn random_string(len: usize)-> String {
+/// Generated a random string of desired length.
+///
+/// # Parameters:
+/// * len: Desired character length for generated string.
+///
+/// # Returns:
+/// * Generated random string.
+pub fn random_string(len: usize)-> String {
     let generated_string: String = rand::thread_rng()
         .sample_iter(Alphanumeric)
         .take(len)

@@ -11,7 +11,7 @@ use tempfile::{tempdir, TempDir};
 ///
 /// # Example
 /// ```rust
-/// use test_common::TestEnvironment;
+/// use test_common::fs::tmp::TestEnvironment;
 ///
 /// {
 ///     let test_folder = TestEnvironment::new();

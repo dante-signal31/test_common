@@ -1,4 +1,4 @@
-/// Module collection for filesystem specific tasks.
+/// Package for filesystem specific tasks.
 
 pub mod tmp;
 pub mod ops;
