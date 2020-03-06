@@ -1,0 +1,62 @@
+# GENERAL CONFIGURATION
+################################
+language: rust
+rust:
+  - nightly
+  - stable
+matrix:
+  allow_failures:
+    # I'm working with nightly, but it will be nice to realize when stable works too.
+    - rust: stable
+  fast_finish: true
+# Cache your dependencies so they are only recompiled if they or the compiler were upgraded
+cache: cargo
+
+################################
+# BRANCH FILTER
+################################
+branches:
+  only:
+    - staging
+
+################################
+# RESULT NOTIFICATIONS
+################################
+notifications:
+  recipients:
+    - dante.signal31@gmail.com
+  on_sucess: always
+  on_failure: always
+
+################################
+# TESTING
+################################
+before_script:
+  - cargo update
+script:
+  - echo "Starting tests..."
+  - cargo test --verbose
+  - echo "Tests done."
+
+################################
+# DEPLOYMENT
+################################
+jobs:
+  include:
+    # Update master branch.
+    - stage: Branch merge to production branch
+      python: 3.6
+      env:
+        - PYTHONPATH="${PYTHONPATH}:${TRAVIS_BUILD_DIR}"
+      if: branch = staging
+      script:
+        - echo "Merging staging branch with master..."
+        - ci_scripts/merge_with_production
+        - echo "Merge done."
+    # Upload packages to crates.io
+    - stage: Crates.io deployment
+      script:
+        - echo "Deploying to crates.io..."
+        - cargo login $CARGO_TOKEN
+        - cargo publish --allow-dirty
+        - echo "Crates.io deployment done."
