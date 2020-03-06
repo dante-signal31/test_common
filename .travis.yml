@@ -1,14 +1,13 @@
 # GENERAL CONFIGURATION
 ################################
+os: linux
+dist: xenial
+group: travis_latest
 language: rust
 rust:
   - nightly
   - stable
-matrix:
-  allow_failures:
-    # I'm working with nightly, but it will be nice to realize when stable works too.
-    - rust: stable
-  fast_finish: true
+
 # Cache your dependencies so they are only recompiled if they or the compiler were upgraded
 cache: cargo
 
@@ -25,7 +24,7 @@ branches:
 notifications:
   recipients:
     - dante.signal31@gmail.com
-  on_sucess: always
+  on_success: always
   on_failure: always
 
 ################################
@@ -42,6 +41,10 @@ script:
 # DEPLOYMENT
 ################################
 jobs:
+  allow_failures:
+    # I'm working with nightly, but it will be nice to realize when stable works too.
+    - rust: stable
+  fast_finish: true
   include:
     # Update master branch.
     - stage: Branch merge to production branch
