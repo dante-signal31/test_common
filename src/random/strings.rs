@@ -1,3 +1,5 @@
+/// Random operations with strings.
+
 use rand::prelude::*;
 use rand::distributions::Alphanumeric;
 
