@@ -37,6 +37,11 @@ impl TestEnvironment {
     }
 }
 
+impl AsRef<Path> for TestEnvironment {
+    fn as_ref(&self) -> &Path {
+        self.path()
+    }
+}
 
 #[cfg(test)]
 mod tests {
