@@ -3,7 +3,7 @@
 use rand::prelude::*;
 use rand::distributions::Alphanumeric;
 
-/// Generated a random string of desired length.
+/// Generate a random string of desired length.
 ///
 /// # Parameters:
 /// * len: Desired character length for generated string.
