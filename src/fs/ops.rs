@@ -24,12 +24,14 @@ pub fn delete_file(file_path: &str)-> Result<(), io::Error>{
 ///
 /// # Returns:
 /// Returns an io::Error if any file does not exists unless ignore_missing was true.
-pub fn delete_files(files: Vec<&str>, ignore_missing: bool)-> Result<(), io::Error>{
+pub fn delete_files<T>(files: Vec<T>, ignore_missing: bool)-> Result<(), io::Error>
+    where T: AsRef<str>{
     for file in files{
+        let file_name = file.as_ref();
         if ignore_missing {
-            let _ = delete_file(file);
+            let _ = delete_file(file_name);
         } else {
-            let _ = delete_file(file)?;
+            let _ = delete_file(file_name)?;
         }
     }
     Ok(())
@@ -57,12 +59,14 @@ pub fn copy_file(source_file_path: &str, destination_file_path: &str)-> Result<u
 ///
 /// # Returns:
 /// Returns an io::Error if destination_folder does not exists or any to be copied file does not..
-pub fn copy_files(files: Vec<&str>, destination_folder_path: &str)-> Result<(), io::Error> {
+pub fn copy_files<T>(files: Vec<T>, destination_folder_path: &str)-> Result<(), io::Error>
+    where T: AsRef<str> {
     for file in files{
-        let path = Path::new(&file);
+        let file_name = file.as_ref();
+        let path = Path::new(&file_name);
         if let Some(filename) = path.file_name() {
             let destination_filename = Path::new(destination_folder_path).join(filename);
-            copy_file(file, destination_filename.as_path().to_str()
+            copy_file(file_name, destination_filename.as_path().to_str()
                 .expect("Destination file name for copy has non valid unicode characters."))?;
         }
     }
